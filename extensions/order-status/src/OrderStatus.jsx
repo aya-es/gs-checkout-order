@@ -67,10 +67,10 @@ function fetchOrderInfo(esId, orderId) {
   useEffect(() => {
     console.log(spOrderId)
    let order_id = spOrderId.id.split('/');
-    // fetchOrderInfo(spOrderId.name, order_id[4]);
+    fetchOrderInfo(spOrderId.name, order_id[4]);
   
     // fetchOrderInfo("ES118371", "5616867770527");//Click&Collect
-    fetchOrderInfo("ES116681", "5589148139679");
+    // fetchOrderInfo("ES116681", "5589148139679");
    
   }, []); 
 
@@ -81,7 +81,7 @@ function fetchOrderInfo(esId, orderId) {
           <View>
     <BlockStack cornerRadius="loose" padding="loose" background="subdued">
  <Heading level="2">{nsOrderData.status_contents.title}</Heading> 
-      <Image source="https://cdn.shopify.com/s/files/1/0684/0896/7416/files/order-prosess-sample3.png?v=1706587851" />
+      {/* <Image source="https://cdn.shopify.com/s/files/1/0684/0896/7416/files/order-prosess-sample3.png?v=1706587851" /> */}
     
      
       <TextBlock>{nsOrderData.status_contents.body}</TextBlock> 
