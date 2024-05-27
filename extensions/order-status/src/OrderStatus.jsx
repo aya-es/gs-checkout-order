@@ -70,11 +70,12 @@ function fetchOrderInfo(esId, orderId, mode) {
   useEffect(() => {
     console.log("spOrderId")
     console.log(spOrderId)
+    console.log(mf)
     let order_id = spOrderId.id.split('/');
     const testMode = mf.find(item => item.metafield.key === "test_mode")?.metafield.value
     const testGid = mf.find(item => item.metafield.key === "test_gid")?.metafield.value
     console.log(testGid)
-   if(testMode && order_id[4] == testGid){
+   if(testMode == "true" && order_id[4] == testGid){
     const liveGid = mf.find(item => item.metafield.key === "live_gid")?.metafield.value
     fetchOrderInfo('', liveGid, "test");
 
