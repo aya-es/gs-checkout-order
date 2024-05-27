@@ -38,6 +38,9 @@ network_access = true
  [[extensions.metafields]]
  namespace = "order_status"
  key = "test_gid"
+ [[extensions.metafields]]
+ namespace = "order_status"
+ key = "live_gid"
 
 # Defines settings that will be collected from merchants installing
 # your extension. Learn more:

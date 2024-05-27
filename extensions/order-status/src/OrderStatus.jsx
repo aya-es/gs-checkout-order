@@ -25,7 +25,7 @@ function Extension() {
   const { shop, appMetafields, order } = useApi();
   const spOrderId =useSubscription(order);
   const mf =useSubscription(appMetafields);
-  const testMode = mf.find(item => item.metafield.key === "test_mode")?.metafield.value
+
   const [nsOrderData, setNsOrderData] = useState(null);
   const [nsTracking, setNsTracking] = useState(null);
   const [nsInstructions, setNsInstructions] = useState(null);
@@ -36,10 +36,10 @@ function Extension() {
 const baseUrl = 'https://3650449.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1308&deploy=1&compid=3650449&h=a5f935ac1927dddec5cb';
  
 // Function to fetch order information
-function fetchOrderInfo(esId, orderId) { 
+function fetchOrderInfo(esId, orderId, mode) { 
   
   let apiUrl = `${baseUrl}&gid=${orderId}&eid=${esId}`;
-  if(testMode){ apiUrl = `${baseUrl}&gid=${orderId}&mode=test`}
+  if(mode == "test"){ apiUrl = `${baseUrl}&gid=${orderId}&mode=test`}
   // Use the fetch function to get order information from the NetSuite API
   fetch(apiUrl, {
     method: 'GET',
@@ -70,16 +70,18 @@ function fetchOrderInfo(esId, orderId) {
   useEffect(() => {
     console.log("spOrderId")
     console.log(spOrderId)
-    console.log("testMode")
-    console.log(testMode)
-   if(testMode){
-    const testGid = mf.find(item => item.metafield.key === "test_gid")?.metafield.value
-    fetchOrderInfo('', testGid);
-
-   }else{    
     let order_id = spOrderId.id.split('/');
-      fetchOrderInfo(spOrderId.name, order_id[4]);
-      console.log(order_id)}
+    const testMode = mf.find(item => item.metafield.key === "test_mode")?.metafield.value
+    const testGid = mf.find(item => item.metafield.key === "test_gid")?.metafield.value
+    console.log(testGid)
+   if(testMode && order_id[4] == testGid){
+    const liveGid = mf.find(item => item.metafield.key === "live_gid")?.metafield.value
+    fetchOrderInfo('', liveGid, "test");
+
+   } else{    
+      fetchOrderInfo(spOrderId.name, order_id[4],"order");
+      console.log(order_id)
+    }
 
    
     // fetchOrderInfo(spOrderId.name, order_id[4]);
