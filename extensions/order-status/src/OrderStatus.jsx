@@ -47,7 +47,7 @@ function fetchOrderInfo(esId, orderId, mode) {
     headers: {
       'Content-Type': 'application/json',
       'User-Agent': 'Mozilla/5.0',
-      'ES-Authorization': 'ESdCHTVxE68pjd'
+      'ES-Authorization': 'ESG62dgsFS342'
     }
   })
   .then(response => response.json())
