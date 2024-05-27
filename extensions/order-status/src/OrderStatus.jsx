@@ -24,6 +24,8 @@ export default reactExtension(
 function Extension() {
   const { shop, appMetafields, order } = useApi();
   const spOrderId =useSubscription(order);
+  const mf =useSubscription(appMetafields);
+  const testMode = mf.find(item => item.metafield.key === "test_mode")?.metafield.value
   const [nsOrderData, setNsOrderData] = useState(null);
   const [nsTracking, setNsTracking] = useState(null);
   const [nsInstructions, setNsInstructions] = useState(null);
@@ -35,8 +37,9 @@ const baseUrl = 'https://3650449.extforms.netsuite.com/app/site/hosting/scriptle
  
 // Function to fetch order information
 function fetchOrderInfo(esId, orderId) { 
-  const apiUrl = `${baseUrl}&gid=${orderId}&eid=${esId}`;
- 
+  
+  let apiUrl = `${baseUrl}&gid=${orderId}&eid=${esId}`;
+  if(testMode){ apiUrl = `${baseUrl}&gid=${orderId}&mode=test`}
   // Use the fetch function to get order information from the NetSuite API
   fetch(apiUrl, {
     method: 'GET',
@@ -65,12 +68,22 @@ function fetchOrderInfo(esId, orderId) {
 
   // useEffectを使ってコンポーネントがマウントされた時に一度だけ実行されるようにする
   useEffect(() => {
+    console.log("spOrderId")
     console.log(spOrderId)
-   let order_id = spOrderId.id.split('/');
-    fetchOrderInfo(spOrderId.name, order_id[4]);
-  
+    console.log("testMode")
+    console.log(testMode)
+   if(testMode){
+    const testGid = mf.find(item => item.metafield.key === "test_gid")?.metafield.value
+    fetchOrderInfo('', testGid);
+
+   }else{    
+    let order_id = spOrderId.id.split('/');
+      fetchOrderInfo(spOrderId.name, order_id[4]);
+      console.log(order_id)}
+
+   
+    // fetchOrderInfo(spOrderId.name, order_id[4]);
     // fetchOrderInfo("ES118371", "5616867770527");//Click&Collect
-    // fetchOrderInfo("ES116681", "5589148139679");
    
   }, []); 
 
@@ -80,19 +93,16 @@ function fetchOrderInfo(esId, orderId) {
        { nsOrderData !== null ? 
           <View>
     <BlockStack cornerRadius="loose" padding="loose" background="subdued">
- <Heading level="2">{nsOrderData.status_contents.title}</Heading> 
-      {/* <Image source="https://cdn.shopify.com/s/files/1/0684/0896/7416/files/order-prosess-sample3.png?v=1706587851" /> */}
-    
-     
+ <Heading level="2">{nsOrderData.status_contents.title}</Heading>     
       <TextBlock>{nsOrderData.status_contents.body}</TextBlock> 
       <TextBlock>{nsOrderData.status_contents.footer}</TextBlock> 
 
-      {nsTracking && <Link to={nsTracking} external>Track Your Order</Link> }
+      {nsTracking && <Link to={nsTracking} external>Track your Order</Link> }
       {deliveryMethod == "Click&Collect" ?
       <View>
       <Divider />
       <BlockSpacer spacing="base" />
-      <TextBlock emphasis="bold">Where to Collect Your Order</TextBlock>
+      <TextBlock emphasis="bold">Your Click and Collect Location</TextBlock>
       <TextBlock> {nsOrderData.click_and_collect.address} <Link to={nsOrderData.click_and_collect.url} external>Map</Link></TextBlock>
       <TextBlock><Link to={`tel:${nsOrderData.click_and_collect.phone}`} external>{nsOrderData.click_and_collect.phone}</Link></TextBlock>
    
@@ -101,7 +111,7 @@ function fetchOrderInfo(esId, orderId) {
       <View>
          <Divider />
          <BlockSpacer spacing="base" />
-         <TextBlock emphasis="bold">Your Shipping Address</TextBlock> 
+         <TextBlock emphasis="bold">Your Delivery Address</TextBlock> 
          <TextBlock>{nsOrderData.shipping_address.shipping_addressee}</TextBlock>
          <TextBlock>{nsOrderData.shipping_address.shipping_addrtext}</TextBlock></View> 
          :""
@@ -112,11 +122,11 @@ function fetchOrderInfo(esId, orderId) {
      <View>
      <BlockSpacer spacing="loose" />
      <BlockStack cornerRadius="loose" padding="loose" background="subdued">
-     <Heading level="2">Easyshed Installation Guides</Heading>
-     <TextBlock>You can download the assembly instructions and concrete slab dimensions to help you get started before your shed arrives.</TextBlock>
+     <Heading level="2">Easyshed Assembly Instructions</Heading>
+     <TextBlock>You can download your Assembly Instructions and Concrete Slab Dimensions to help you kick start your build before your shed arrives.</TextBlock>
      {nsOrderData.shed_instructions.map((product, index) => (
       <TextBlock key={index}>
-         <TextBlock emphasis="bold">{product.shed_model}: </TextBlock><Link  to={product.link} external>Assembly Instruction</Link> / <Link key={`slab-${index}`} to={product.slab_link} external>Concrete Slab</Link>
+         <TextBlock emphasis="bold">{product.shed_model}: </TextBlock><Link  to={product.link} external>Assembly Instructions</Link> / <Link key={`slab-${index}`} to={product.slab_link} external>Concrete Slab Dimensions</Link>
       </TextBlock>
       ))}
      </BlockStack>
