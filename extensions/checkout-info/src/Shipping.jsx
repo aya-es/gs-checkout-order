@@ -12,7 +12,7 @@ export default reactExtension(
 );
 
 function Extension() {
-  const shippingTruck = "https://cdn.shopify.com/s/files/1/0684/0896/7416/files/es-truck.png?v=1706499281"
+  const shippingTruck = "https://cdn.shopify.com/s/files/1/0580/9052/0735/files/checkout_es-truck.png?v=1717075312"
   return (
     <BlockStack padding="base" background="subdued"  >
     <InlineLayout columns={['8%', 'fill']} spacing="base" blockAlignment="center">

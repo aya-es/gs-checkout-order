@@ -10,7 +10,7 @@ export default reactExtension(
 );
 
 function Extension() {
-  const uspImg  = "https://cdn.shopify.com/s/files/1/0684/0896/7416/files/usp.jpg?v=1712637832"
+  const uspImg  = "https://cdn.shopify.com/s/files/1/0580/9052/0735/files/checkout_usp.jpg?v=1717075252"
     return (
       <BlockStack  background="base" >
          <Image source={uspImg} />

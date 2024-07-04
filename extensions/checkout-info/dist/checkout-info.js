@@ -19532,7 +19532,7 @@ ${errorInfo.componentStack}`);
     () => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Extension, {})
   );
   function Extension() {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlockStack2, { padding: "none", cornerRadius: "base", background: "transparent", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Image2, { source: "https://cdn.shopify.com/s/files/1/0684/0896/7416/files/Happy-customers-header.png?v=1706507275" }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlockStack2, { padding: "none", cornerRadius: "base", background: "transparent", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Image2, { source: "https://cdn.shopify.com/s/files/1/0580/9052/0735/files/checkout_happy_customers-header.png?v=1717075327" }) });
   }
 
   // extensions/checkout-info/src/Footer.jsx
@@ -19570,7 +19570,7 @@ ${errorInfo.componentStack}`);
     () => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Extension3, {})
   );
   function Extension3() {
-    const uspImg = "https://cdn.shopify.com/s/files/1/0684/0896/7416/files/usp.jpg?v=1712637832";
+    const uspImg = "https://cdn.shopify.com/s/files/1/0580/9052/0735/files/checkout_usp.jpg?v=1717075252";
     return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(BlockStack2, { background: "base", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Image2, { source: uspImg }) });
   }
 
@@ -19581,7 +19581,7 @@ ${errorInfo.componentStack}`);
     () => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Extension4, {})
   );
   function Extension4() {
-    const shippingTruck = "https://cdn.shopify.com/s/files/1/0684/0896/7416/files/es-truck.png?v=1706499281";
+    const shippingTruck = "https://cdn.shopify.com/s/files/1/0580/9052/0735/files/checkout_es-truck.png?v=1717075312";
     return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(BlockStack2, { padding: "base", background: "subdued", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(InlineLayout2, { columns: ["8%", "fill"], spacing: "base", blockAlignment: "center", children: [
       /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Image2, { source: shippingTruck }),
       /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(TextBlock2, { size: "small", children: "Enter your address to check shipping rates and nearby Click & Collect locations." })

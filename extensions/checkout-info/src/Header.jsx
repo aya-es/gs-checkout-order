@@ -12,7 +12,7 @@ export default reactExtension(
 function Extension() {
   return (
     <BlockStack padding="none" cornerRadius="base" background="transparent"  >
-      <Image source="https://cdn.shopify.com/s/files/1/0684/0896/7416/files/Happy-customers-header.png?v=1706507275" />
+      <Image source="https://cdn.shopify.com/s/files/1/0580/9052/0735/files/checkout_happy_customers-header.png?v=1717075327" />
     </BlockStack>
   );
 }

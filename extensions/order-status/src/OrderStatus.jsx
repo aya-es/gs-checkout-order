@@ -52,39 +52,48 @@ function fetchOrderInfo(esId, orderId, mode) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Order Information:', data);
+  if(data){
+    // console.log('Order Information:', data);
     setNsOrderData(data);
     data.tracking_url && setNsTracking(data.tracking_url);
-    // data.click_and_collect.address && setClickAndCollect(data.click_and_collect);
     setDeliveryMethod(data.delivery_method);
-    console.log(data.shed_instructions.length)
-    data.shed_instructions.length >= 1 && setNsInstructions(data.shed_instructions);
+    // console.log(data.shed_instructions.length);
+    // console.log(data.shed_instructions[0].shed_model !== undefined);
 
+    data.shed_instructions[0].shed_model !== undefined && setNsInstructions(data.shed_instructions);
+
+  }else{ setNsOrderData("error")}
+    
   })
   .catch(error => {
-    console.error('Error fetching order information:', error);
+    setNsOrderData("error")
+    //console.error('Error fetching order information:', error);
   });
 }
 
   // useEffectを使ってコンポーネントがマウントされた時に一度だけ実行されるようにする
   useEffect(() => {
-    console.log("spOrderId")
-    console.log(spOrderId)
-    console.log(mf)
+    // console.log("spOrderId")
+     //console.log(spOrderId)
+    // console.log(mf)
     let order_id = spOrderId.id.split('/');
     const testMode = mf.find(item => item.metafield.key === "test_mode")?.metafield.value
     const testGid = mf.find(item => item.metafield.key === "test_gid")?.metafield.value
-    console.log(testGid)
-   if(testMode == "true" && order_id[4] == testGid){
-    const liveGid = mf.find(item => item.metafield.key === "live_gid")?.metafield.value
-    fetchOrderInfo('', liveGid, "test");
-
-   } else{    
+    //console.log(order_id[4])
+    if(order_id[4] == 1){
+      //console.log('Checkout Setting mode');
+      const liveGid = mf.find(item => item.metafield.key === "live_gid")?.metafield.value
+      //console.log(liveGid);
+      fetchOrderInfo('', liveGid, "test");
+    } else if(testMode == "true" && order_id[4] == testGid ){
+      //console.log('Test Gid mode');
+      const liveGid = mf.find(item => item.metafield.key === "live_gid")?.metafield.value
+      fetchOrderInfo('', liveGid, "test");
+    } else{    
       fetchOrderInfo(spOrderId.name, order_id[4],"order");
-      console.log(order_id)
+      //console.log('Live Gid mode');
+      //console.log(order_id)
     }
-
-   
     // fetchOrderInfo(spOrderId.name, order_id[4]);
     // fetchOrderInfo("ES118371", "5616867770527");//Click&Collect
    
@@ -93,7 +102,7 @@ function fetchOrderInfo(esId, orderId, mode) {
   return (
    
     <View>
-       { nsOrderData !== null ? 
+       { nsOrderData !== null &&nsOrderData !== "error" ? 
           <View>
     <BlockStack cornerRadius="loose" padding="loose" background="subdued">
  <Heading level="2">{nsOrderData.status_contents.title}</Heading>     
@@ -116,7 +125,8 @@ function fetchOrderInfo(esId, orderId, mode) {
          <BlockSpacer spacing="base" />
          <TextBlock emphasis="bold">Your Delivery Address</TextBlock> 
          <TextBlock>{nsOrderData.shipping_address.shipping_addressee}</TextBlock>
-         <TextBlock>{nsOrderData.shipping_address.shipping_addrtext}</TextBlock></View> 
+         <TextBlock>{nsOrderData.shipping_address.shipping_addrtext}</TextBlock>
+         <TextBlock>{nsOrderData.shipping_address.shipping_phone}</TextBlock></View> 
          :""
          }
     </BlockStack>
@@ -136,7 +146,7 @@ function fetchOrderInfo(esId, orderId, mode) {
 
      </View>
     }
-      </View> : <Spinner />}
+      </View> : nsOrderData === "error" ? <View></View>: <Spinner />}
      </View>
   );
 }
