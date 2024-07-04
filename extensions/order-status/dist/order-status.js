@@ -19585,7 +19585,6 @@ ${errorInfo.componentStack}`);
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
-          "User-Agent": "Mozilla/5.0",
           "ES-Authorization": "ESG62dgsFS342"
         }
       }).then((response) => response.json()).then((data) => {

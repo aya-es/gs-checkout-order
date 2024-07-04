@@ -46,7 +46,6 @@ function fetchOrderInfo(esId, orderId, mode) {
     mode: "cors",
     headers: {
       'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0',
       'ES-Authorization': 'ESG62dgsFS342'
     }
   })
